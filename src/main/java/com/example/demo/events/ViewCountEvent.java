@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ViewCountEvent {
 
-    private String targetID;
+    private String targetId;
     private String targetType;
     private LocalDateTime timestamp;
 }

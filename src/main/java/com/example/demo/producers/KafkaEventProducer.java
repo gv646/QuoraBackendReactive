@@ -1,25 +1,25 @@
 package com.example.demo.producers;
 
-import com.example.demo.config.KafkaConfig;
-import com.example.demo.events.ViewCountEvent;
-import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+
+import com.example.demo.config.KafkaConfig;
+import com.example.demo.events.ViewCountEvent;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class KafkaEventProducer {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
-    private final KafkaConfig kafkaConfig;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void publishViewCountEvent(ViewCountEvent viewCountEvent) {
-        kafkaTemplate.send(KafkaConfig.TOPIC_NAME, viewCountEvent.getTargetID())
+        kafkaTemplate.send(KafkaConfig.TOPIC_NAME, viewCountEvent.getTargetId(), viewCountEvent)
                 .whenComplete((result, err) -> {
-                    if (err != null) {
-                        System.out.println("Error publishing view count: " + err.getMessage());
+                    if(err != null) {
+                        System.out.println("Error publishing view count event: " + err.getMessage());
                     }
                 });
-
     }
 }
