@@ -28,6 +28,10 @@ public class Answer {
     @Size(min = 10, max = 1000, message = "Content must be between 10 and 1000 characters")
     private String content;
 
+    @NotBlank(message = "Question ID is required")
+    @Indexed
+    private String questionId;
+
     @CreatedDate
     @Indexed
     private LocalDateTime createdAt;
